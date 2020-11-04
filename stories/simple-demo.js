@@ -1,4 +1,5 @@
 import React, { useReducer, useCallback } from 'react';
+import logger from '../srhfl';
 
 const reducer = (state, action) => {
     switch (action.type) {
@@ -16,7 +17,7 @@ const reducer = (state, action) => {
 }
 
 const SimpleDemo = () => {
-    const [state, dispatch] = useReducer(reducer, { count: 0 });
+    const [state, dispatch] = useReducer(logger(reducer), { count: 0 });
 
     const decrementClick = useCallback(() => dispatch({ type: 'DECREMENT' }), 
         [dispatch]
