@@ -1,7 +1,43 @@
-import React from 'react';
+import React, { useReducer, useCallback } from 'react';
+
+const reducer = (state, action) => {
+    switch (action.type) {
+        case 'INCREMENT': return {
+            count: state.count + 1
+        };
+        case 'DECREMENT': return {
+            count: state.count - 1
+        };
+        case 'RESET': return {
+            count: 0
+        }
+        default: return state;
+    }
+}
 
 const SimpleDemo = () => {
-    return <div>TODO</div>
+    const [state, dispatch] = useReducer(reducer, { count: 0 });
+
+    const decrementClick = useCallback(() => dispatch({ type: 'DECREMENT' }), 
+        [dispatch]
+    );
+
+    const incrementClick = useCallback(() => dispatch({ type: 'INCREMENT' }), 
+        [dispatch]
+    );
+
+    const resetClick = useCallback(() => dispatch({ type: 'RESET' }), 
+        [dispatch]
+    );
+
+    return <div>
+        <span>The count: {state.count}</span>
+        <div>
+            <button type="button" onClick={decrementClick}>-</button>
+            <button type="button" onClick={incrementClick}>+</button>
+            <button type="button" onClick={resetClick}>Reset</button>
+        </div>
+    </div>
 }
 
 export default SimpleDemo;
